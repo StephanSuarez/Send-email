@@ -16,13 +16,23 @@ export class AppService {
     let subject: string = body.subject;
     let text: string = body.text;
 
-    const data = await this.resend.emails.send({
-      from: 'onboarding@resend.dev',
-      to: email,
-      subject: subject,
-      html: text,
-    });
 
-    return data;
+    //try catch
+    try {
+      const dataToSend = {
+        from: 'onboarding@resend.dev',
+        to: email,
+        subject: subject,
+        html: text,
+      }
+
+      console.log(dataToSend);
+
+      const response = await this.resend.emails.send(dataToSend);
+
+      return response;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
